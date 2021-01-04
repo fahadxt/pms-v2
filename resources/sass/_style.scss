@@ -617,7 +617,7 @@ i.icon {
   font-weight: bolder !important;
 }
 
-.fa, .fas{
+.fa, .fas, .far{
   font-family: "Font Awesome 5 Pro" !important;
 }
 
@@ -764,4 +764,41 @@ a:hover {
 a {
   color: $primary !important;
   text-decoration: none !important;
+}
+
+.circle-icon-2{
+  background-color: #e4e9ec;
+  /* padding: 0.5em; */
+  width: 25px;
+  height: 25px;
+  position: relative;
+  border-radius: 50%;
+}
+
+.circle-icon-2 > i{
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.after-icon{
+  width: 100%;
+  &::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-right: 0.2em;
+    width: 100%;
+    height: 1px;
+    background-color: #ececec;
+  }
+}
+
+.footer-shadow{
+  box-shadow: 0 -8px 11px -6px rgba(0, 0, 0, 0.05);
+}
+
+div {
+  transition-duration: 0.5s;
 }
