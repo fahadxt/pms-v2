@@ -17,11 +17,12 @@ class Index extends Component
 
     protected $listeners = [
         'projectCreate' => 'handleCreated',
-        'projectDelete' => 'handleDeleted',
     ];
 
     public function render()
     {
+        $name_max = 18 ;
+        $description_max = 100 ;
         $user_id = auth()->user()->id;
         
 
@@ -34,7 +35,16 @@ class Index extends Component
         }
 
 
-        $projects= $projects->latest()->paginate(18);
+        $projects= $projects->latest()->paginate(18)->appends([
+            'status' => '$request->status' , 
+        ]);
+
+        $projects->getCollection()->transform(function ($row) use($name_max,$description_max){
+            $row->name = (strlen(strip_tags($row->name)) >= $name_max) ? mb_substr(($row->name),0,$name_max,'UTF-8').'...' : strip_tags($row->name);
+            $row->description = (strlen(strip_tags($row->description)) >= $description_max) ? mb_substr(($row->description),0,$description_max,'UTF-8').'...' : strip_tags($row->description);
+            return $row;
+        });
+
         $this->dispatchBrowserEvent('close-modal');
 
         return view('livewire.projects.index', [
@@ -58,9 +68,5 @@ class Index extends Component
         $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم الإنشاء بنجاح 👍 ']);
     }
     
-    public function handleDeleted($data)
-    {
-        session()->flash('message', 'تم الحذف بنجاح 👍 ');
-    }
 
 }

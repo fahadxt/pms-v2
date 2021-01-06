@@ -7,9 +7,12 @@ use Livewire\WithPagination;
 use App\Models\projects;
 use App\Models\tasks;
 use App\Models\statuses;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Index extends Component
 {
+    use AuthorizesRequests;
+    
     protected $listeners = [
         'taskCreated' => 'handleCreated',
         'taskUpdated' => 'handleUpdated',
@@ -27,6 +30,8 @@ class Index extends Component
     public function render()
     {
         $project = projects::find($this->projectsid);
+        $this->authorize('view', $project);
+
         $taskable_type = get_class($project);
         $taskable_id = $this->projectsid;
         $user_id = auth()->user()->id;
@@ -37,6 +42,8 @@ class Index extends Component
             $task = tasks::where('taskable_type',$taskable_type)->where('taskable_id', $taskable_id)->where('assigned_to',$user_id);
         }
         $task = $task->latest()->paginate(18);
+
+        // dd();
         return view('livewire.tasks.index',[
             'tasks' => $task,
             'data' =>$project

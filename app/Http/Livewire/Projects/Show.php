@@ -5,20 +5,15 @@ namespace App\Http\Livewire\Projects;
 use Livewire\Component;
 use App\Models\projects;
 use App\Models\tasks;
-use App\User;
+use App\Models\User;
 
 class Show extends Component
 {
 
     protected $listeners = [
         'projectUpdaeted' => 'handleUpdated',
+        'projectRemove' => 'handleRemove',
     ];
-
-    public function handleUpdated($data)
-    {
-        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم التعديل بنجاح 👍 ']);
-    }
-
 
     public  $data;
 
@@ -28,12 +23,12 @@ class Show extends Component
         $this->emit('postAdded');
     }
 
-    public function delete($id)
+    public function handleRemove($id)
     {
-        $project = projects::find($this->data->id);
+        $project = projects::find($id);
         $project->delete();
-        session()->flash('message', 'تم الحذف بنجاح 👍 ');
-        redirect()->route('projects.index'); 
+        session()->flash('success', 'تم الحذف بنجاح 👍 ');
+        return redirect()->route('projects.index'); 
     }
     
     public function deattach($id)
@@ -55,5 +50,10 @@ class Show extends Component
         ])->slot('slot');
     }
 
+    public function handleUpdated($data)
+    {
+        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم التعديل بنجاح 👍 ']);
+        $this->emit('statisticsUpdate', $data);
+    }
     
 }

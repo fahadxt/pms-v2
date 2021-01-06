@@ -5,7 +5,11 @@
                 {{ __('Projects') }}
             </h2>
 
-            @livewire('projects.create', [ 'data' => null , 'type' => 'New'])
+            @livewire('projects.create', [ 
+                'data' => null , 
+                'btn_name' => 'New',
+                'btn_color' => 'blue',
+            ])
 
         </div>
     </x-slot>

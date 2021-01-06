@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class projects extends Model
 {
+    use SoftDeletes;
+
+    
     public $guarded = [];
     protected $table = 'projects';
 
@@ -25,5 +29,14 @@ class projects extends Model
     public function tasks()
     {
         return $this->morphMany('App\Models\tasks' , 'taskable');
+    }
+
+    // function to remove releted data (morphMany)
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($project) { 
+             $project->tasks()->delete();
+        });
     }
 }

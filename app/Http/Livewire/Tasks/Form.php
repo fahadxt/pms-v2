@@ -7,7 +7,6 @@ use Livewire\WithPagination;
 use App\Models\projects;
 use App\Models\tasks;
 use App\Models\statuses;
-use App\User;
 
 
 class Form extends Component

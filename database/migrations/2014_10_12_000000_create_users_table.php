@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->text('profile_photo_path')->nullable();
             $table->boolean('active')->comment('is user active or deactivated')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

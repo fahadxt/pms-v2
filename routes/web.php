@@ -25,7 +25,3 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard' , App\Http\Livewire\Dashboard\Index::class)->name('dashboard.index');
     
 });
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});

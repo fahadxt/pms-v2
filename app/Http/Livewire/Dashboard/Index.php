@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Dashboard;
 use Livewire\Component;
 use App\Models\projects;
 use App\Models\tasks;
-use App\User;
 use Carbon\Carbon;
 
 

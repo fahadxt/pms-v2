@@ -19,8 +19,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "livewire/livewire": "^2.0",
-        "spatie/laravel-permission": "^3.13",
-        "tcg/voyager": "^1.4"
+        "santigarcor/laratrust": "^6.3",
+        "spatie/laravel-permission": "^3.13"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

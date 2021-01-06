@@ -2,24 +2,25 @@
 
 namespace App\Http\Livewire\Projects;
 
+use App\Models\User;
 use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\projects;
-use App\Models\statuses;
 
-use App\User;
+use App\Models\statuses;
+use Livewire\WithPagination;
 
 
 class Create extends Component
 {
     use WithPagination;
 
-    public  $name , $description , $users , $data , $status = 1 , $type;
+    public  $name , $description , $users , $data , $status = 1 , $btn_name, $btn_color;
 
 
-    public function mount($data , $type)
+    public function mount($data , $btn_name, $btn_color)
     {
-        $this->type = $type;
+        $this->btn_name = $btn_name;
+        $this->btn_color = $btn_color;
         $this->data = null;
 
         if($data){
@@ -39,14 +40,15 @@ class Create extends Component
 
 
 
+    protected $rules = [
+        'name'        => 'required|min:3|max:255',
+        'description' => 'required',
+        'users'       => 'required_without_all',
+    ];
+
     public function store()
     {
-        $this->validate([
-            'name' => 'required|min:3|max:255',
-            'description' => 'required',
-            'users' => 'required_without_all',
-        ]);
-
+        $this->validate();
 
         $data = [
             'name' => $this->name,
@@ -59,9 +61,13 @@ class Create extends Component
             $createdData->update($data);
             $createdData->users()->sync($this->users);
             $this->dispatchBrowserEvent('close-modal');
+            $this->emit('statisticsUpdate', $createdData);
             $this->emit('projectUpdaeted' , $createdData);
-            // session()->flash('message', 'تم التعديل بنجاح 👍 ');
-            // redirect()->route('projects.show',['id' => $this->data->id]); 
+            $this->emit('refreshStatistics');
+            
+            // $this->emit('statisticsUpdate', $createdData);
+            
+
         } else {
             $createdData = projects::create($data);
             $createdData->users()->sync($this->users);

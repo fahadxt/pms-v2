@@ -27,6 +27,7 @@ class CreateProjectsTable extends Migration
 
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

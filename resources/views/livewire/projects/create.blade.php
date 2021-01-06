@@ -1,6 +1,6 @@
 <div x-data="{isOpen:false}" x-on:close-modal.window="isOpen = false">
-    <button @click="isOpen = true" class="modal-button bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-500">
-        {{ __($type) }}
+    <button @click="isOpen = true" class="modal-button bg-{{$btn_color}}-500 p-3 rounded-lg text-white hover:bg-{{$btn_color}}-500">
+        {{ __($btn_name) }}
     </button>
 
     <div x-show.transition.opacity="isOpen"

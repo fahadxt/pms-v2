@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Tasks;
 use Livewire\Component;
 use App\Models\projects;
 use App\Models\tasks;
-use App\User;
 
 
 class Show extends Component
