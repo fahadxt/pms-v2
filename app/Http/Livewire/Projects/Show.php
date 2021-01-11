@@ -20,7 +20,6 @@ class Show extends Component
     public function mount(projects $id)
     {
         $this->data = $id;
-        $this->emit('postAdded');
     }
 
     public function handleRemove($id)

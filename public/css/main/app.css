@@ -764,12 +764,12 @@ i.icon {
 }
 
 a:hover {
-  color: #243b52 !important;
+  color: #243b52;
   text-decoration: none !important;
 }
 
 a {
-  color: #4d7092 !important;
+  color: #4d7092;
   text-decoration: none !important;
 }
 
@@ -809,6 +809,14 @@ a {
 
 div {
   transition-duration: 0.5s;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  pointer-events: all;
+  width: 24px;
+  height: 24px;
+  -webkit-appearance: none;
+  /* @apply w-6 h-6 appearance-none pointer-events-auto; */
 }
 
 .swal2-popup.swal2-toast {

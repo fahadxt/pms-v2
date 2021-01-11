@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Projects;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\projects;
+use App\Models\statuses;
 use Livewire\WithPagination;
 
 class Index extends Component
@@ -14,10 +15,19 @@ class Index extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $name , $description , $users;
-
+    private $projects ;
+    public $search;
+    
     protected $listeners = [
         'projectCreate' => 'handleCreated',
+        'updatedFilterSearch' => 'updatedFilterSearch',
     ];
+
+
+    public function mount()
+    {
+        $this->projects = projects::orderBy('created_at', 'desc');
+    }
 
     public function render()
     {
@@ -26,16 +36,14 @@ class Index extends Component
         $user_id = auth()->user()->id;
         
 
-        $projects = projects::orderBy('created_at', 'desc');
-        if(auth()->user()->hasRole('user'))
-        {
-            $projects = $projects->whereHas('users', function ($query) use($user_id) {
-                $query->where('user_id', $user_id);
-            });
-        }
+        $this->projects = projects::orderBy('created_at', 'desc');
+        $projects =  $this->projects;
 
 
-        $projects= $projects->latest()->paginate(18)->appends([
+        $projects =  $this->applySearchFilter($projects);
+
+
+        $projects = $projects->paginate(18)->appends([
             'status' => '$request->status' , 
         ]);
 
@@ -45,16 +53,42 @@ class Index extends Component
             return $row;
         });
 
+        
         $this->dispatchBrowserEvent('close-modal');
-
+        $usersData = User::all();
+        
         return view('livewire.projects.index', [
-            'data' => $projects,
-            'usersData' => User::all(),
-        ])->layout('livewire.projects.layouts.index', [
-            'data' => $projects,
+            'projects' =>  $projects,
+            'usersData' =>  $usersData,
+        ])
+        ->layout('livewire.projects.layouts.index', [
+            'usersData' =>  $usersData,
+            'filter' => 'index',
         ])->slot('slot');
 
     }
+
+
+
+
+
+    public function applySearchFilter($projects)
+    {
+        if(auth()->user()->hasRole('user'))
+        {
+            $projects = $projects->whereHas('users', function ($query) use($user_id) {
+                $query->where('user_id', $user_id);
+            });
+        }
+
+        if ($this->search) {
+            $projects = $projects->where('name', 'like' , '%' . $this->search . '%')
+            ->orWhere('description', 'like' , '%' . $this->search . '%');
+        }
+
+        return  $projects;
+    }
+
 
     public function show($id)
     {
@@ -66,6 +100,12 @@ class Index extends Component
     public function handleCreated($data)
     {
         $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم الإنشاء بنجاح 👍 ']);
+    }
+
+    public function updatedFilterSearch($queryString)
+    {
+        $this->search = $queryString;
+        $this->render();
     }
     
 

@@ -758,11 +758,11 @@ i.icon {
 }
 
 a:hover {
-  color: $primary-darker !important;
+  color: $primary-darker ;
   text-decoration: none !important;
 }
 a {
-  color: $primary !important;
+  color: $primary ;
   text-decoration: none !important;
 }
 
@@ -801,4 +801,12 @@ a {
 
 div {
   transition-duration: 0.5s;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	pointer-events: all;
+	width: 24px;
+	height: 24px;
+	-webkit-appearance: none;
+  /* @apply w-6 h-6 appearance-none pointer-events-auto; */
 }
