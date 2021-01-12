@@ -14,9 +14,10 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $name , $description , $users;
-    private $projects ;
+    
+    // public filters variable 
     public $filter_search , $filter_due_on, $filter_username, $filter_statuses;
+    
     
     protected $listeners = [
         'projectCreate' => 'handleCreated',
@@ -25,11 +26,7 @@ class Index extends Component
     ];
 
 
-    public function mount()
-    {
-        $this->projects = projects::orderBy('created_at', 'desc');
-    }
-
+    // render projects component
     public function render()
     {
         $name_max = 18 ;
@@ -38,9 +35,36 @@ class Index extends Component
         
 
         $projects = projects::orderBy('created_at', 'desc');
+        $projects = $this->applyFilters($projects);
+        $projects = $projects->paginate(18);
 
+        $projects->getCollection()->transform(function ($row) use($name_max,$description_max){
+            $row->name = (strlen(strip_tags($row->name)) >= $name_max) ? mb_substr(($row->name),0,$name_max,'UTF-8').'...' : strip_tags($row->name);
+            $row->description = (strlen(strip_tags($row->description)) >= $description_max) ? mb_substr(($row->description),0,$description_max,'UTF-8').'...' : strip_tags($row->description);
+            return $row;
+        });
+
+        $this->dispatchBrowserEvent('close-modal');
+
+        $usersData = User::all();
+        return view('livewire.projects.index', [
+            'projects' =>  $projects,
+            'usersData' =>  $usersData,
+        ])
+        ->layout('livewire.projects.layouts.index', [
+            'usersData' =>  $usersData,
+            'filter' => 'index',
+        ])->slot('slot');
+
+    }
+
+
+    // function to filter collocton of projects
+    public function applyFilters($projects)
+    {
         if ($this->filter_due_on) {
             $from = date('Y-m-d', strtotime($this->filter_due_on[0]) );
+            
             if(count($this->filter_due_on) > 1){
                 $to = date('Y-m-d', strtotime($this->filter_due_on[1]) );
                 $projects->whereBetween('project_due_on' , [ $from , $to ] );        
@@ -56,6 +80,7 @@ class Index extends Component
             $projects->where('name', 'like' , '%' . $this->filter_search . '%');
         }
 
+        // if the user not leader or admin get only project attached to this user  
         if(auth()->user()->hasRole('user'))
         {
             $projects->whereHas('users', function ($query) use($user_id) {
@@ -67,7 +92,6 @@ class Index extends Component
         if ($this->filter_username) {
             $username = $this->filter_username;
             $projects->whereHas('users', function ($query) use($username) {
-                // $query->where('user_id', 1);
                 $query->where('name', 'like' , '%' . $username . '%')
                 ->orWhere('email', 'like' , '%' . $username . '%');
             });
@@ -80,73 +104,10 @@ class Index extends Component
             });
         }
 
-        
-
-
-        // dd($projects->get());
-        $projectsdd = $projects->paginate(18)->appends([
-            'status' => '$request->status' , 
-        ]);
-
-        // $projectsdd->getCollection()->transform(function ($row) use($name_max,$description_max){
-        //     $row->name = (strlen(strip_tags($row->name)) >= $name_max) ? mb_substr(($row->name),0,$name_max,'UTF-8').'...' : strip_tags($row->name);
-        //     $row->description = (strlen(strip_tags($row->description)) >= $description_max) ? mb_substr(($row->description),0,$description_max,'UTF-8').'...' : strip_tags($row->description);
-        //     return $row;
-        // });
-
-        
-        $this->dispatchBrowserEvent('close-modal');
-        $usersData = User::all();
-        
-        return view('livewire.projects.index', [
-            'projects' =>  $projectsdd,
-            'usersData' =>  $usersData,
-        ])
-        ->layout('livewire.projects.layouts.index', [
-            'usersData' =>  $usersData,
-            'filter' => 'index',
-        ])->slot('slot');
-
-    }
-
-
-    public function applySearchFilter($coll_projects)
-    {
-        if(auth()->user()->hasRole('user'))
-        {
-            $projects = $projects->whereHas('users', function ($query) use($user_id) {
-                $query->where('user_id', $user_id);
-            });
-        }
-
-        if ($this->filter_search) {
-            $projects = $projects->where('name', 'like' , '%' . $this->filter_search . '%')
-            ->orWhere('description', 'like' , '%' . $this->filter_search . '%');
-        }
-
-        if ($this->filter_due_on) {
-            
-            $from = date('Y-m-d', strtotime($this->filter_due_on[0]) );
-            if(count($this->filter_due_on) > 1){
-                $to = date('Y-m-d', strtotime($this->filter_due_on[1]) );
-                $projects = $projects->whereBetween('project_due_on' , [ $from , $to ] );        
-            }
-            else{
-                $projects = $projects->whereDate('project_due_on' , '=',  $from  );        
-            }
-
-        }
-
         return $projects;
     }
 
-
-    public function show($id)
-    {
-        return redirect()->route('projects.show', ['id' => $id]);
-    }
-
-
+    // function to rest filters and get all projects
     public function restFilters()
     {
         $this->filter_search = null;
@@ -157,11 +118,8 @@ class Index extends Component
         $this->emit('restFiltersOnFilter');
     }
 
-    public function handleCreated($data)
-    {
-        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم الإنشاء بنجاح 👍 ']);
-    }
 
+    // listener to change public variable and render this component    
     public function updatedFilters($updatedFilters)
     {
         if(!empty($updatedFilters)){
@@ -186,16 +144,14 @@ class Index extends Component
         
         $this->render();
     }
-    // public function updatedFilterDueOn($filter_due_on)
-    // {
-    //     $this->filter_due_on = $filter_due_on;
-    //     $this->render();
-    // }
-    // public function cleareFilterDueOn($filter_due_on)
-    // {
-    //     $this->filter_due_on = $filter_due_on;
-    //     $this->render();
-    // }
-    
+
+
+    // listener to dispaly sweet alert success after success store a new project 
+    // and call restFilters function to clear all filters to be sour there is no filters to show all projects
+    public function handleCreated($data)
+    {
+        $this->restFilters();
+        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم الإنشاء بنجاح 👍 ']);
+    }
 
 }
