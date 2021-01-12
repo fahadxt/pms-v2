@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="w-full md:w-1/4 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="due_on">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="assigned_to">
                                     {{__('Assigned To')}}
                                 </label>
                                 <div wire:ignore>

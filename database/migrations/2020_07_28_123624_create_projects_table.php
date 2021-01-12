@@ -25,6 +25,7 @@ class CreateProjectsTable extends Migration
             $table->integer('status_id')->unsigned()->nullable()->default(1);
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
 
+            $table->date('project_due_on');
 
             $table->timestamps();
             $table->softDeletes();

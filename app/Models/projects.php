@@ -14,7 +14,7 @@ class projects extends Model
     
     public $guarded = [];
     protected $table = 'projects';
-
+    protected $dates = ['project_due_on'];
 
     public function user(){
         return $this->belongsTo('App\Models\User', 'owner_id', 'id');

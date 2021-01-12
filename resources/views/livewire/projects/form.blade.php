@@ -1,6 +1,6 @@
 <form method="POST" enctype="multipart/form-data" class="w-full ui large form project" wire:submit.prevent='store'>
     <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="name">
                 {{__('projects.name')}}
             </label>
@@ -14,7 +14,7 @@
                 @enderror
         </div>
 
-        <div class="w-full md:w-1/2 px-3">
+        <div class="w-full md:w-1/3 px-3">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="users">
                 {{__('projects.Joint users')}}
             </label>
@@ -32,6 +32,30 @@
                         {{ $message }}
                     </p> 
             @enderror
+        </div>
+
+        <div class="w-full md:w-1/3 px-3">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="project_due_on">
+                {{__('Due on')}}
+            </label>
+            <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                type="text" id="project_due_on" name="project_due_on" wire:model.lazy='project_due_on'>
+                @error('project_due_on') 
+                    <p class="text-red-500 text-xs text-right mt-2">
+                        {{ $message }}
+                    </p> 
+                @enderror
+                <script>
+                    $(document).ready(function() {
+                        $("#project_due_on").flatpickr({
+                            enableTime: false,
+                            dateFormat: "Y-m-d",
+                            minDate: "today"
+                        });
+                    });
+                </script>
+
         </div>
 
         @if($data)

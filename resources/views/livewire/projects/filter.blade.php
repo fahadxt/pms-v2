@@ -1,27 +1,57 @@
 <div>
 
-    <form enctype="multipart/form-data" class="w-full ui large form project" wire:submit.prevent="filter">
+    <form enctype="multipart/form-data" class="w-full ui large form project" wire:submit.prevent="updatedFilters">
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/1 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="name">
-                    {{__('Search')}}
+                    {{__('Search By Title')}}
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     type="text" wire:model="filter_search">
             </div>
         </div>
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/1 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="name">
+                    {{__('Search By User')}}
+                </label>
+                <input
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                    type="text" wire:model="filter_username">
+            </div>
+        </div>
 
         <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right"
-                for="description">
-                {{__('projects.description')}}
-            </label>
-            
-            
+            <div class="w-full md:w-1/1 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="filter_statuses">
+                    {{__('statuses')}}
+                </label>
+                <div wire:ignore>
+                    <select name="filter_statuses[]" multiple id="filter_statuses" class="ui fluid multiple selection dropdown search "
+                        wire:model='filter_statuses'>
+                        <option value="" disabled selected></option>
+                        @foreach($statuses as $status)
+                        <option value="{{$status->id}}">{{$status->display_name}}</option>
+                        @endForeach
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="w-full px-3">
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full  px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="due_on">
+                    {{__('Due on')}}
+                </label>
+                <input
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                    type="text" id="filter_project_due_on" wire:model.lazy='filter_due_on'>
+            </div>
+        </div>
+
+        {{-- range test --}}
+        {{-- <div class="w-full px-3">
             
             <div x-data="range()" x-init="mintrigger(); maxtrigger()" class="relative max-w-xl w-full">
                 <div>
@@ -89,17 +119,49 @@
                 }
             </script>
 
+        </div> --}}
+
+        <div class="flex space-x-4 mb-6">
+            <div class="px-3">
+                <button class="component border border-transparent rounded font-semibold tracking-wide text-sm px-5 py-2 focus:outline-none focus:shadow-outline bg-blue-500 text-gray-100 hover:bg-blue-600 hover:text-gray-200">
+                    {{__('Apply')}}
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+
+            <div class="px-3">
+                <button type="button" class="component border border-transparent rounded font-semibold tracking-wide text-sm px-5 py-2 focus:outline-none focus:shadow-outline bg-gray-500 text-gray-100 hover:bg-gray-600 hover:text-gray-200 " wire:click="$emit('restFilters')">
+                    {{__('Reset')}}
+                    <i class="fas fa-undo"></i>
+                </button>
+            </div>
         </div>
 
-            <div class="flex flex-wrap -mx-3">
-                <div class="w-full px-3">
-                    <button type="submit" class="ui positive right labeled icon button" wire:dirty.attr="disabled">
-                        حفظ
-                        <i class="checkmark icon"></i>
-                    </button>
-                </div>
-            </div>
 
     </form>
 </div>
 
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('#statuses').dropdown({ 
+            fullTextSearch: true,
+            clearable: true,
+            detachable: false,
+        });
+        // $('#statuses').on('change', function (e) {
+        //     var statuses = $(this).val();
+        //     this.set('statuses', statuses);
+        // });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#filter_project_due_on").flatpickr({
+            // enableTime: false,
+            dateFormat: "Y-m-d",
+            mode: "range"
+        });
+    });
+</script>
+@endpush 

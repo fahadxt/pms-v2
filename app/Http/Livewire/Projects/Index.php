@@ -16,11 +16,12 @@ class Index extends Component
 
     public $name , $description , $users;
     private $projects ;
-    public $search;
+    public $filter_search , $filter_due_on, $filter_username, $filter_statuses;
     
     protected $listeners = [
         'projectCreate' => 'handleCreated',
-        'updatedFilterSearch' => 'updatedFilterSearch',
+        'updatedFilters' => 'updatedFilters',
+        'restFilters' => 'restFilters',
     ];
 
 
@@ -40,7 +41,46 @@ class Index extends Component
         $projects =  $this->projects;
 
 
-        $projects =  $this->applySearchFilter($projects);
+        if(auth()->user()->hasRole('user'))
+        {
+            $projects = $projects->whereHas('users', function ($query) use($user_id) {
+                $query->where('user_id', $user_id);
+            });
+        }
+
+        if ($this->filter_search) {
+            $projects = $projects->where('name', 'like' , '%' . $this->filter_search . '%')
+            ->orWhere('description', 'like' , '%' . $this->filter_search . '%');
+        }
+
+        if ($this->filter_username) {
+            $username = $this->filter_username;
+            $projects = $projects->whereHas('users', function ($query) use($username) {
+                // $query->where('user_id', 1);
+                $query->where('name', 'like' , '%' . $username . '%')
+                ->orWhere('email', 'like' , '%' . $username . '%');
+            });
+        }
+
+        if ($this->filter_statuses) {
+            $filter_statuses = $this->filter_statuses;
+            $projects = $projects->whereHas('status', function ($query) use($filter_statuses) {
+                $query->whereIn('id',  $filter_statuses );
+            });
+        }
+
+        if ($this->filter_due_on) {
+            
+            $from = date('Y-m-d', strtotime($this->filter_due_on[0]) );
+            if(count($this->filter_due_on) > 1){
+                $to = date('Y-m-d', strtotime($this->filter_due_on[1]) );
+                $projects = $projects->whereBetween('project_due_on' , [ $from , $to ] );        
+            }
+            else{
+                $projects = $projects->whereDate('project_due_on' , '=',  $from  );        
+            }
+
+        }
 
 
         $projects = $projects->paginate(18)->appends([
@@ -69,10 +109,7 @@ class Index extends Component
     }
 
 
-
-
-
-    public function applySearchFilter($projects)
+    public function applySearchFilter($coll_projects)
     {
         if(auth()->user()->hasRole('user'))
         {
@@ -81,12 +118,25 @@ class Index extends Component
             });
         }
 
-        if ($this->search) {
-            $projects = $projects->where('name', 'like' , '%' . $this->search . '%')
-            ->orWhere('description', 'like' , '%' . $this->search . '%');
+        if ($this->filter_search) {
+            $projects = $projects->where('name', 'like' , '%' . $this->filter_search . '%')
+            ->orWhere('description', 'like' , '%' . $this->filter_search . '%');
         }
 
-        return  $projects;
+        if ($this->filter_due_on) {
+            
+            $from = date('Y-m-d', strtotime($this->filter_due_on[0]) );
+            if(count($this->filter_due_on) > 1){
+                $to = date('Y-m-d', strtotime($this->filter_due_on[1]) );
+                $projects = $projects->whereBetween('project_due_on' , [ $from , $to ] );        
+            }
+            else{
+                $projects = $projects->whereDate('project_due_on' , '=',  $from  );        
+            }
+
+        }
+
+        return $projects;
     }
 
 
@@ -96,17 +146,54 @@ class Index extends Component
     }
 
 
+    public function restFilters()
+    {
+        $this->filter_search = null;
+        $this->filter_username = null;
+        $this->filter_due_on = null;
+
+        $this->emit('restFiltersOnFilter');
+    }
 
     public function handleCreated($data)
     {
         $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم الإنشاء بنجاح 👍 ']);
     }
 
-    public function updatedFilterSearch($queryString)
+    public function updatedFilters($updatedFilters)
     {
-        $this->search = $queryString;
+        if(!empty($updatedFilters)){
+
+            if(isset($updatedFilters['filter_search'])){
+                $this->filter_search = $updatedFilters['filter_search'];
+            }
+
+            if(isset($updatedFilters['filter_username'])){
+                $this->filter_username = $updatedFilters['filter_username'];
+            }
+            if(isset($updatedFilters['filter_statuses'])){
+                $this->filter_statuses = $updatedFilters['filter_statuses'];
+            }
+            
+            if(isset($updatedFilters['filter_due_on'])){
+                $this->filter_due_on = $updatedFilters['filter_due_on'];
+            }
+        }else{
+            $this->restFilters();
+        }
+        
         $this->render();
     }
+    // public function updatedFilterDueOn($filter_due_on)
+    // {
+    //     $this->filter_due_on = $filter_due_on;
+    //     $this->render();
+    // }
+    // public function cleareFilterDueOn($filter_due_on)
+    // {
+    //     $this->filter_due_on = $filter_due_on;
+    //     $this->render();
+    // }
     
 
 }

@@ -30,6 +30,7 @@ class projectsFactory extends Factory
             'status_id'   => statuses::all()->random()->id,
             'created_at' => $created_at = $this->faker->dateTimeBetween($startDate = '-1 month', $endDate = 'now', $timezone = null),
             'updated_at' => $created_at,
+            'project_due_on' => $created_at = $this->faker->dateTimeBetween($startDate = 'now', $endDate = '12 month', $timezone = null),
         ];
     }
 }

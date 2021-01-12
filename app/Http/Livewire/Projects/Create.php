@@ -14,7 +14,7 @@ class Create extends Component
 {
     use WithPagination;
 
-    public  $name , $description , $users , $data , $status = 1 , $btn_name, $btn_color;
+    public  $name , $description , $users , $data , $status = 1 , $btn_name, $btn_color, $project_due_on;
 
 
     public function mount($data , $btn_name, $btn_color)
@@ -28,6 +28,8 @@ class Create extends Component
             $this->name = $this->data->name;
             $this->description = $this->data->description;
             $this->status = $this->data->status_id;
+            $this->project_due_on = $this->data->project_due_on;
+            $this->project_due_on = $this->project_due_on->format('Y-m-d');
             $this->users = $this->data->users()->get()->pluck('id')->toArray();
         }
     }
@@ -44,6 +46,7 @@ class Create extends Component
         'name'        => 'required|min:3|max:255',
         'description' => 'required',
         'users'       => 'required_without_all',
+        'project_due_on'       => 'required',
     ];
 
     public function store()
@@ -54,15 +57,16 @@ class Create extends Component
             'name' => $this->name,
             'description' => $this->description,
             'status_id' => $this->status,
+            'project_due_on' => $this->project_due_on,
             'owner_id' => auth()->user()->id
         ];
         if($this->data) {
-            $createdData = projects::find($this->data->id);
-            $createdData->update($data);
-            $createdData->users()->sync($this->users);
+            $updaetedData = projects::find($this->data->id);
+            $updaetedData->update($data);
+            $updaetedData->users()->sync($this->users);
             $this->dispatchBrowserEvent('close-modal');
-            $this->emit('statisticsUpdate', $createdData);
-            $this->emit('projectUpdaeted' , $createdData);
+            $this->emit('statisticsUpdate', $updaetedData);
+            $this->emit('projectUpdaeted' , $updaetedData);
             $this->emit('refreshStatistics');
             
             // $this->emit('statisticsUpdate', $createdData);

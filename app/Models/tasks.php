@@ -12,6 +12,7 @@ class tasks extends Model
     use SoftDeletes;
     
     public $guarded = [];
+    protected $dates = ['due_on'];
 
     public function taskable()
     {

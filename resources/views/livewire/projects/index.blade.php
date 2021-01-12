@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="flex flex-wrap">
     @forelse ($projects as $key => $value)
     <div class="w-full sm:w-1/1 md:w-1/2 lg:w-1/3 xl:w-1/3 2xl:w-1/4  p-3 flex flex-col">
@@ -53,7 +53,7 @@
 
                 <span class="inline-block align-middle text-gray-400 font-light" dir="ltr">
                     <i class="far fa-calendar-alt"></i>
-                    {{$value->created_at->format('Y-M-d')}}
+                    {{$value->project_due_on->format('Y-M-d')}}
                 </span>
             </div>
         </div>
