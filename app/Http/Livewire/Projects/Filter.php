@@ -14,19 +14,9 @@ class Filter extends Component
         'restFiltersOnFilter' => 'restFilters',
     ];
 
-    // public function updatedFilterSearch($value)
-    // {
-    //     $this->updatedFilters();
-    // }
-
-    // public function updatedFilterDueOn($value)
-    // {
-    //     $this->updatedFilters();
-    // }
 
     public function updatedFilters()
     {
-
         if($this->filter_search){
             $this->updatedFilters ['filter_search'] =  $this->filter_search ;
         }
@@ -40,26 +30,21 @@ class Filter extends Component
             $this->updatedFilters ['filter_due_on'] = explode(" to ", $this->filter_due_on) ;
         }
 
-        // dd($this->updatedFilters);
         $this->emit('updatedFilters', $this->updatedFilters);
     }
 
-    // public function filter()
-    // {
-    //     dd('filter');
-    //     $validatedData = $this->validate();
-    // }
 
     public function restFilters()
     {
         $this->filter_search = null;
         $this->filter_username = null;
         $this->filter_due_on = null;
+        $this->filter_statuses = null;
     }
+
 
     public function render()
     {
-        // dd('sdf');
         return view('livewire.projects.filter', [
             'statuses' => statuses::all(),
         ]);

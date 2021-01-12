@@ -37,25 +37,36 @@ class Index extends Component
         $user_id = auth()->user()->id;
         
 
-        $this->projects = projects::orderBy('created_at', 'desc');
-        $projects =  $this->projects;
+        $projects = projects::orderBy('created_at', 'desc');
 
+        if ($this->filter_due_on) {
+            $from = date('Y-m-d', strtotime($this->filter_due_on[0]) );
+            if(count($this->filter_due_on) > 1){
+                $to = date('Y-m-d', strtotime($this->filter_due_on[1]) );
+                $projects->whereBetween('project_due_on' , [ $from , $to ] );        
+            }
+            else{
+                $projects->whereDate('project_due_on' , '=',  $from  );        
+            }
+
+        }
+
+        
+        if ($this->filter_search) {
+            $projects->where('name', 'like' , '%' . $this->filter_search . '%');
+        }
 
         if(auth()->user()->hasRole('user'))
         {
-            $projects = $projects->whereHas('users', function ($query) use($user_id) {
+            $projects->whereHas('users', function ($query) use($user_id) {
                 $query->where('user_id', $user_id);
             });
         }
 
-        if ($this->filter_search) {
-            $projects = $projects->where('name', 'like' , '%' . $this->filter_search . '%')
-            ->orWhere('description', 'like' , '%' . $this->filter_search . '%');
-        }
 
         if ($this->filter_username) {
             $username = $this->filter_username;
-            $projects = $projects->whereHas('users', function ($query) use($username) {
+            $projects->whereHas('users', function ($query) use($username) {
                 // $query->where('user_id', 1);
                 $query->where('name', 'like' , '%' . $username . '%')
                 ->orWhere('email', 'like' , '%' . $username . '%');
@@ -64,41 +75,31 @@ class Index extends Component
 
         if ($this->filter_statuses) {
             $filter_statuses = $this->filter_statuses;
-            $projects = $projects->whereHas('status', function ($query) use($filter_statuses) {
+            $projects->whereHas('status', function ($query) use($filter_statuses) {
                 $query->whereIn('id',  $filter_statuses );
             });
         }
 
-        if ($this->filter_due_on) {
-            
-            $from = date('Y-m-d', strtotime($this->filter_due_on[0]) );
-            if(count($this->filter_due_on) > 1){
-                $to = date('Y-m-d', strtotime($this->filter_due_on[1]) );
-                $projects = $projects->whereBetween('project_due_on' , [ $from , $to ] );        
-            }
-            else{
-                $projects = $projects->whereDate('project_due_on' , '=',  $from  );        
-            }
-
-        }
+        
 
 
-        $projects = $projects->paginate(18)->appends([
+        // dd($projects->get());
+        $projectsdd = $projects->paginate(18)->appends([
             'status' => '$request->status' , 
         ]);
 
-        $projects->getCollection()->transform(function ($row) use($name_max,$description_max){
-            $row->name = (strlen(strip_tags($row->name)) >= $name_max) ? mb_substr(($row->name),0,$name_max,'UTF-8').'...' : strip_tags($row->name);
-            $row->description = (strlen(strip_tags($row->description)) >= $description_max) ? mb_substr(($row->description),0,$description_max,'UTF-8').'...' : strip_tags($row->description);
-            return $row;
-        });
+        // $projectsdd->getCollection()->transform(function ($row) use($name_max,$description_max){
+        //     $row->name = (strlen(strip_tags($row->name)) >= $name_max) ? mb_substr(($row->name),0,$name_max,'UTF-8').'...' : strip_tags($row->name);
+        //     $row->description = (strlen(strip_tags($row->description)) >= $description_max) ? mb_substr(($row->description),0,$description_max,'UTF-8').'...' : strip_tags($row->description);
+        //     return $row;
+        // });
 
         
         $this->dispatchBrowserEvent('close-modal');
         $usersData = User::all();
         
         return view('livewire.projects.index', [
-            'projects' =>  $projects,
+            'projects' =>  $projectsdd,
             'usersData' =>  $usersData,
         ])
         ->layout('livewire.projects.layouts.index', [
@@ -151,6 +152,7 @@ class Index extends Component
         $this->filter_search = null;
         $this->filter_username = null;
         $this->filter_due_on = null;
+        $this->filter_statuses = null;
 
         $this->emit('restFiltersOnFilter');
     }
