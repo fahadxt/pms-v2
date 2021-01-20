@@ -97,7 +97,7 @@ $(document).ready(function() {
 });
 
 
-
+console.log('js.js')
 
 
 $('.ui.form').form({

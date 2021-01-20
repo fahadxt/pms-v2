@@ -4,7 +4,12 @@
 // Variables
 @import 'variables';
 @import 'style';
-@import '~sweetalert2/src/sweetalert2.scss'
+@import '~sweetalert2/src/sweetalert2.scss';
+@import 'flatpickr';
+
+@import 'semantic-ui/_dropdown';
+@import 'semantic-ui/_transition';
+
 // @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 // @import '~@fortawesome/fontawesome-free/scss/regular';
 // @import '~@fortawesome/fontawesome-free/scss/solid';

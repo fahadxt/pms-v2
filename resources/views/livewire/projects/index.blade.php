@@ -62,7 +62,7 @@
     <h1>No Data</h1>
     @endforelse
 
-    {{-- {{$projects->links('pagination-links')}} --}}
+    {{$projects->links('pagination-links')}}
 
 
 </div>

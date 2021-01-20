@@ -32,3 +32,4 @@ $(document).ready(function() {
 		minDate: "today"
 	});
 });
+console.log('main.js')

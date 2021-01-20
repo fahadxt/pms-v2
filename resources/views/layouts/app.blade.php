@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', __('Project Mangment')) }}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -14,28 +14,21 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main/app.css') }}">
     
     <script src="{{ asset('js/turbolinks.js') }}"></script>
 
-    @livewireStyles
     
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
-
     {{-- include jQuery library --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>  
 
-    {{-- flatpickr --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    
+    @livewireStyles
 </head>
 
-<body>
+<body class="language-php h-full w-full font-sans text-gray-900 antialiased">
 
         @livewire('navigation-dropdown')
 
@@ -55,13 +48,12 @@
 
     @yield('script')
 
-    <script src="{{ asset('js/semantic.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/semantic.min.js') }}"></script> --}}
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}"></script>
     
-    
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script>
     @stack('scripts')
     @stack('modals')
 

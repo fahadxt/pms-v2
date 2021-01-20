@@ -1,14 +1,14 @@
 <div>
 
-    <form enctype="multipart/form-data" class="w-full ui large form project" wire:submit.prevent="updatedFilters">
+    <form enctype="multipart/form-data" class="w-full" wire:submit.prevent="updatedFilters">
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/1 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="name">
                     {{__('Search By Title')}}
                 </label>
                 <input
-                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    type="text" wire:model="filter_search">
+                    class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
+                    type="text" wire:model="filter_search" autocomplete="off">
             </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
@@ -17,10 +17,11 @@
                     {{__('Search By User')}}
                 </label>
                 <input
-                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    type="text" wire:model="filter_username">
+                    class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
+                    type="text" wire:model="filter_username" autocomplete="off">
             </div>
         </div>
+        
 
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/1 px-3">
@@ -28,7 +29,7 @@
                     {{__('statuses')}}
                 </label>
                 <div wire:ignore>
-                    <select name="filter_statuses[]" multiple id="filter_statuses" class="ui fluid multiple selection dropdown search "
+                    <select name="filter_statuses[]" multiple id="filter_statuses" class="ui fluid multiple  appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                         wire:model='filter_statuses'>
                         <option value="" disabled selected></option>
                         @foreach($statuses as $status)
@@ -45,8 +46,8 @@
                     {{__('Due on')}}
                 </label>
                 <input
-                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    type="text" id="filter_project_due_on" wire:model.lazy='filter_due_on'>
+                    class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
+                    type="text" id="filter_project_due_on" wire:model.lazy='filter_due_on' autocomplete="off">
             </div>
         </div>
 

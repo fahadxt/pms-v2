@@ -36,9 +36,11 @@
 // global.$ = global.jQuery = require('jquery');
 
 
-
 import 'alpinejs';
-import 'sweetalert2/dist/sweetalert2.js';
+const flatpickr = require("flatpickr");
 
-// require('../../public/js/dashboard');
+
+
+require('../../public/js/semantic-ui/dropdown');
+require('../../public/js/semantic-ui/transition');
 // require('../../public/js/js');

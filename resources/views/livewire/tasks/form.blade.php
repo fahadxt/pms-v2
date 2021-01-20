@@ -21,7 +21,7 @@
                                     {{__('projects.name')}}
                                 </label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                    class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                                     type="text" id="name" name="name" wire:model.lazy='name'>
                                     @error('name') 
                                         <p class="text-red-500 text-xs text-right mt-2">
@@ -35,7 +35,7 @@
                                     {{__('Assigned To')}}
                                 </label>
                                 <div wire:ignore>
-                                    <select name="assigned_to[]" multiple id="assigned_to" class="ui fluid multiple selection dropdown search "
+                                    <select name="assigned_to[]" multiple id="assigned_to" class="ui fluid multiple selection dropdown search appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                                         wire:model.lazy='users'>
                                         <option value="" disabled selected></option>
                                         @foreach($usersData as $user)
@@ -55,7 +55,7 @@
                                     {{__('Due on')}}
                                 </label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                    class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                                     type="text" id="due_on" name="due_on" wire:model.lazy='due_on'>
                                     @error('due_on') 
                                         <p class="text-red-500 text-xs text-right mt-2">
@@ -71,7 +71,7 @@
                                     {{__('Status')}}
                                 </label>
                                 <div wire:ignore>
-                                    <select name="status_id" class="ui fluid selection dropdown search " wire:model.lazy='status_id'>
+                                    <select name="status_id" class="ui fluid selection dropdown search appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded" wire:model.lazy='status_id'>
                                         <option value="" disabled selected></option>
                                         @foreach($statuses as $status)
                                         <option value="{{$status->id}}">{{__($status->name)}}</option>
@@ -95,7 +95,7 @@
 
                                 <textarea 
                                     name="description" id="description" cols="50" rows="9"
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                                     wire:model.lazy='description'>
                                 </textarea>
 
@@ -110,9 +110,9 @@
 
                         <div class="flex flex-wrap -mx-3">
                             <div class="w-full px-3">
-                                <button type="submit" class="ui positive right labeled icon button" wire:dirty.attr="disabled">
-                                    حفظ
-                                    <i class="checkmark icon"></i>
+                                <button class="component border border-transparent rounded font-semibold tracking-wide text-sm px-5 py-2 focus:outline-none focus:shadow-outline bg-green-500 text-gray-100 hover:bg-green-600 hover:text-gray-200" wire:dirty.attr="disabled">
+                                    {{__('Save')}}
+                                    <i class="fas fa-check"></i>
                                 </button>
                             </div>
                         </div>

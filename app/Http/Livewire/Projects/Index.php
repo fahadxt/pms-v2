@@ -113,6 +113,7 @@ class Index extends Component
         $this->filter_search = null;
         $this->filter_username = null;
         $this->filter_due_on = null;
+        $this->updatedFilters = null;
         $this->filter_statuses = null;
 
         $this->emit('restFiltersOnFilter');
