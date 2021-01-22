@@ -29,7 +29,7 @@
                     {{__('statuses')}}
                 </label>
                 <div wire:ignore>
-                    <select name="filter_statuses[]" multiple id="filter_statuses" class="ui fluid multiple  appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
+                    <select name="filter_statuses[]" multiple id="filter_statuses" class="ui fluid multiple selection dropdown search  appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                         wire:model='filter_statuses'>
                         <option value="" disabled selected></option>
                         @foreach($statuses as $status)
@@ -123,19 +123,15 @@
         </div> --}}
 
         <div class="flex space-x-4 mb-6">
-            <div class="px-3">
-                <button class="component border border-transparent rounded font-semibold tracking-wide text-sm px-5 py-2 focus:outline-none focus:shadow-outline bg-blue-500 text-gray-100 hover:bg-blue-600 hover:text-gray-200">
+                <x-btn class="text-white bg-blue-600  hover:bg-blue-700 " >
                     {{__('Apply')}}
                     <i class="fas fa-filter"></i>
-                </button>
-            </div>
+                </x-btn>
 
-            <div class="px-3">
-                <button type="button" class="component border border-transparent rounded font-semibold tracking-wide text-sm px-5 py-2 focus:outline-none focus:shadow-outline bg-gray-500 text-gray-100 hover:bg-gray-600 hover:text-gray-200 " wire:click="$emit('restFilters')">
+                <x-btn type="button" class="text-white bg-gray-600  hover:bg-gray-700" wire:click="$emit('restFilters')">
                     {{__('Reset')}}
                     <i class="fas fa-undo"></i>
-                </button>
-            </div>
+                </x-btn>
         </div>
 
 

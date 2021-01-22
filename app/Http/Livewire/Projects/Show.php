@@ -12,21 +12,25 @@ class Show extends Component
 
     protected $listeners = [
         'projectUpdaeted' => 'handleUpdated',
-        'projectRemove' => 'handleRemove',
     ];
 
     public  $data;
+    public $confirmationModal = false;
+    
+    public function toggleConfirmationModal() {
+        $this->confirmationModal = true;
+    }
 
     public function mount(projects $id)
     {
         $this->data = $id;
     }
 
-    public function handleRemove($id)
+    public function remove($id)
     {
         $project = projects::find($id);
         $project->delete();
-        session()->flash('success', 'تم الحذف بنجاح 👍 ');
+        session()->flash('success', __('Record deleted successfully') . ' 👍 ' );
         return redirect()->route('projects.index'); 
     }
     
@@ -51,7 +55,7 @@ class Show extends Component
 
     public function handleUpdated($data)
     {
-        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم التعديل بنجاح 👍 ']);
+        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => __('Record has been modified successfully') . ' 👍 ' ]);
         $this->emit('statisticsUpdate', $data);
     }
     

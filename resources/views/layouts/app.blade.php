@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main/app.css') }}">
     
-    <script src="{{ asset('js/turbolinks.js') }}"></script>
 
     
     {{-- include jQuery library --}}
@@ -56,7 +55,23 @@
     @livewireScripts
     @stack('scripts')
     @stack('modals')
+    {{-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script> --}}
+    {{-- <script src="{{ asset('js/turbolinks.js') }}"></script> --}}
 
+    @if(session()->has('success'))
+        <script>
+            Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: '{{session()->get('success')}}',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+        </script>
+    @endif
+    @php
+        session()->forget('success')
+    @endphp
 </body>
 
 </html>

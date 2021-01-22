@@ -19,7 +19,7 @@ class FakeSeeder extends Seeder
     {
 
         $users = User::factory()
-            ->times(100)
+            ->times(10)
             ->create();
 
         foreach($users as $user){
@@ -29,10 +29,10 @@ class FakeSeeder extends Seeder
             }
         }
 
-        for($i = 0 ; $i < 100 ; $i++){
+        for($i = 0 ; $i < 10 ; $i++){
             $projects = projects::factory()
-            ->has(User::factory()->times(random_int(1, 20)), 'users')
-            ->hasTasks(random_int(1, 20))
+            ->has(User::factory()->times(random_int(1, 5)), 'users')
+            ->hasTasks(random_int(1, 5))
             ->create(); 
         };
         

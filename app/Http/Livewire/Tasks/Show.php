@@ -15,7 +15,7 @@ class Show extends Component
 
     public function handleUpdated($data)
     {
-        session()->flash('message', 'تم التعديل بنجاح 👍 ');
+        session()->flash('message', __('Record has been modified successfully') . ' 👍 ' );
     }
 
 
@@ -32,7 +32,7 @@ class Show extends Component
     {
         $task = tasks::find($this->data->id);
         $task->delete();
-        session()->flash('message', 'تم الحذف بنجاح 👍 ');
+        session()->flash('message',  __('Record deleted successfully') . ' 👍 ' );
         redirect()->route('projects.show', ['id' => $this->data->taskable_id]); 
     }
 

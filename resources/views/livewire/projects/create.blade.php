@@ -1,25 +1,28 @@
-<div x-data="{isOpen:false}" x-on:close-modal.window="isOpen = false">
-    <button @click="isOpen = true" class="modal-button bg-{{$btn_color}}-500 p-3 rounded-lg text-white hover:bg-{{$btn_color}}-500">
+<div>
+    <x-btn class="text-white bg-{{$btn_color}}-600  hover:bg-{{$btn_color}}-700" wire:click="toggleModal">
         {{ __($btn_name) }}
-    </button>
+    </x-btn>
+    
+    <x-jet-dialog-modal wire:model="modal" maxWidth="2xl"> 
+        <x-slot name="title">
+            
+        </x-slot>
 
-    <div x-show.transition.opacity="isOpen"
-        class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto z-20">
+        <x-slot name="content">
+            @include('livewire.projects.form')
+        </x-slot>
+      
+        <x-slot name="footer">
+            <div class="flex">
+                <x-btn class="text-white bg-green-600  hover:bg-green-700 " wire:click="store" wire:loading.attr="disabled">
+                    {{__('Save')}}
+                    <i class="fas fa-check"></i>
+                </x-btn>
 
-        <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto z-20">
-            <div class="bg-white rounded">
-                <div class="flex justify-end pl-4 pt-4">
-                    <button @click="isOpen = false" class="text-3xl leading-none hover:text-gray-300">X</button>
-                </div>
-                <div class="modal-body px-8 py-8">
-                    @include('livewire.projects.form')
-                </div>
+                <x-btn class="text-black bg-white" wire:click="$toggle('modal')" wire:loading.attr="disabled">
+                    {{__('Nevermind')}}
+                </x-btn>
             </div>
-
-        </div>
-
-        <div class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto z-10"
-            style="background-color:rgba(0, 0, 0, .5)" @click="isOpen = false">
-        </div>
-    </div>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>

@@ -5,7 +5,13 @@
                 {{ $data->name }}
             </h2>
 
-            @livewire('tasks.form' , ['project' => $data , 'data' => null , 'type' => 'New task'])
+            @livewire('tasks.form' , [
+                'project' => $data , 
+                'data' => null , 
+                'type' => 'New task',
+                'btn_name' => 'New task',
+                'btn_color' => 'blue'
+            ])
 
         </div>
     </x-slot>

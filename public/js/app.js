@@ -7957,11 +7957,11 @@ if (typeof Object.assign !== "function") {
       addition: '.addition',
       dropdown: '.ui.dropdown',
       hidden: '.hidden',
-      icon: '> .dropdown.icon',
+      icon: '> .fas.fa-angle-down',
       input: '> input[type="hidden"], > select',
       item: '.item',
       label: '> .label',
-      remove: '> .label > .delete.icon',
+      remove: '> .label > .fas.fa-times',
       siblingLabel: '.label',
       menu: '.menu',
       message: '.message',
@@ -8005,7 +8005,7 @@ if (typeof Object.assign !== "function") {
       var placeholder = select.placeholder || false,
           values = select.values || {},
           html = '';
-      html += '<i class="dropdown icon"></i>';
+      html += '<i class="fas fa-angle-down"></i>';
 
       if (select.placeholder) {
         html += '<div class="default text">' + placeholder + '</div>';
@@ -8035,6 +8035,7 @@ if (typeof Object.assign !== "function") {
     },
     // generates label for multiselect
     label: function label(value, text) {
+      return text + '<i class="fas fa-times"></i>';
       return text + '<i class="delete icon"></i>';
     },
     // generates messages like "No results"
@@ -8969,42 +8970,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpinejs__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-// require('./bootstrap');
-// window.Vue = require('vue');
-// window.$ = window.jQuery = require('jquery');
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-// const app = new Vue({
-//     el: '#app',
-// });
-// global.$ = global.jQuery = require('jquery');
 
 
 var flatpickr = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/esm/index.js");
 
 __webpack_require__(/*! ../../public/js/semantic-ui/dropdown */ "./public/js/semantic-ui/dropdown.js");
 
-__webpack_require__(/*! ../../public/js/semantic-ui/transition */ "./public/js/semantic-ui/transition.js"); // require('../../public/js/js');
+__webpack_require__(/*! ../../public/js/semantic-ui/transition */ "./public/js/semantic-ui/transition.js");
 
 /***/ }),
 

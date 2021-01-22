@@ -15,7 +15,11 @@ class Create extends Component
     use WithPagination;
 
     public  $name , $description , $users , $data , $status = 1 , $btn_name, $btn_color, $project_due_on;
-
+    public $modal = false;
+    
+    public function toggleModal() {
+        $this->modal = true;
+    }
 
     public function mount($data , $btn_name, $btn_color)
     {
@@ -38,9 +42,8 @@ class Create extends Component
         $this->name = null;
         $this->description = null;
         $this->users = null;
+        $this->project_due_on = null;
     }
-
-
 
     protected $rules = [
         'name'        => 'required|min:3|max:255',
@@ -65,6 +68,7 @@ class Create extends Component
             $updaetedData->update($data);
             $updaetedData->users()->sync($this->users);
             $this->dispatchBrowserEvent('close-modal');
+            $this->modal = false;
             $this->emit('statisticsUpdate', $updaetedData);
             $this->emit('projectUpdaeted' , $updaetedData);
             $this->emit('refreshStatistics');
@@ -75,7 +79,8 @@ class Create extends Component
         } else {
             $createdData = projects::create($data);
             $createdData->users()->sync($this->users);
-            $this->dispatchBrowserEvent('close-modal');
+            // $this->dispatchBrowserEvent('close-modal');
+            $this->modal = false;
             $this->resetInput();
             $this->dispatchBrowserEvent('dropdown-restore');
             $this->emit('projectCreate' , $createdData);

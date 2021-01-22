@@ -18,11 +18,15 @@ class Form extends Component
 
     use WithPagination;
 
-    public  $name , $description , $assigned_to='' , $due_on , $status_id = 1 , $project , $users, $data , $type;
+    public  $name , $description , $assigned_to='' , $due_on , $status_id = 1 , $project , $users, $data  , $btn_color, $btn_name ;
+    public $modal = false;
     
-    public function mount( $project ,$data , $type)
+    public function toggleModal() {
+        $this->modal = true;
+    }
+
+    public function mount( $project ,$data  )
     {
-        $this->type = $type;
         $this->project = $project;
         $this->data = null;
 
@@ -73,8 +77,8 @@ class Form extends Component
             $updatedData = tasks::find($this->data->id);
             $updatedData->update($data);
             // $this->emit('taskUpdated' , $updatedData);
-
-            session()->flash('message', 'تم التعديل بنجاح 👍 ');
+            $this->modal = false;
+            session()->flash('message', __('Record has been modified successfully') . ' 👍 ' );
             redirect()->route('tasks.show',['projectsid' => $this->project->id , 'id' => $this->data->id]); 
 
 
@@ -82,11 +86,11 @@ class Form extends Component
             $createdData = tasks::create($data);
             $this->emit('taskCreated' , $createdData);
             $this->emit('statisticsUpdate', $this->project);
-
+            $this->modal = false;
             $this->dispatchBrowserEvent('close-modal');
             $this->resetInput();
             $this->dispatchBrowserEvent('dropdown-restore');
-            $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم الإنشاء بنجاح 👍 ']);
+            $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => __('Record created successfully') . ' 👍 '  ]);
 
         }
     }

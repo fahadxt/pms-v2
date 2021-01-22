@@ -85,10 +85,10 @@ class Index extends Component
 
     public function handleCreated($data)
     {
-        session()->flash('message', 'تم الإنشاء بنجاح 👍');
+        session()->flash('message', __('Record created successfully') . ' 👍 '  );
     }
     public function handleUpdated($data)
     {
-        session()->flash('message', 'تم التعديل بنجاح 👍');
+        session()->flash('message', __('Record has been modified successfully') . ' 👍 ' );
     }
 }

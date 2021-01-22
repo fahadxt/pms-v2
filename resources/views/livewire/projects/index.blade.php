@@ -5,7 +5,7 @@
 
         <a href="{{route('projects.show', ['id' => $value->id])}}" class="w-full sm:w-1/1 md:w-1/2 lg:w-1/3 xl:w-1/3 2xl:w-1/4  p-3 flex flex-col">
             <div class="bg-white shadow-sm overflow-hidden flex-1 flex flex-col cursor-pointer 
-            hover:shadow-lg group block rounded-md font-semibold transform hover:scale-105 motion-reduce:transform-none">
+            hover:shadow-lg group  rounded-md font-semibold transform hover:scale-105 motion-reduce:transform-none">
 
 
                 <div class="flex justify-between p-3 bg-gradient-to-br from-blue-400 to-blue-500 text-white ">
@@ -66,18 +66,3 @@
 
 
 </div>
-
-@if(session()->has('success'))
-<script>
-    Swal.fire({
-            position: 'top-center',
-            icon: 'success',
-            title: '{{session()->get('success')}}',
-            showConfirmButton: false,
-            timer: 2000
-        })
-</script>
-@endif
-@php
-session()->forget('success')
-@endphp

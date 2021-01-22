@@ -19,7 +19,7 @@
 
     <div class="lg:flex h-full lg:items-start color-primary">
         <div
-            class="w-full h-full flex-wrap lg:w-1/5 lg:px-6 text-xl text-grey-darkest leading-normal pt-8 lg:pt-16 pl-8 bg-gradient-to-b from-gray-100 to-white transition-all duration-300 h-96">
+            class="w-full flex-wrap lg:w-1/5 lg:px-6 text-xl text-grey-darkest leading-normal pt-8 lg:pt-16 pl-8 bg-gradient-to-b from-gray-100 to-white transition-all duration-300 h-96">
 
             {{-- small screen --}}
             <div
@@ -42,7 +42,7 @@
 
             </div>
 
-            <div class="w-full h-full sticky pin hidden h-64 lg:h-auto overflow-x-hidden lg:block mt-0 border border-grey-light lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-10"
+            <div class="w-full  sticky pin hidden h-64 lg:h-auto overflow-x-hidden lg:block mt-0 border border-grey-light lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-10"
                 style="top:5em;" id="menu-content">
                 <ul class="list-reset">
                     @livewire('projects.filter')

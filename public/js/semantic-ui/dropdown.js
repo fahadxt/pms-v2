@@ -3841,11 +3841,11 @@ $.fn.dropdown.settings = {
     addition     : '.addition',
     dropdown     : '.ui.dropdown',
     hidden       : '.hidden',
-    icon         : '> .dropdown.icon',
+    icon         : '> .fas.fa-angle-down',
     input        : '> input[type="hidden"], > select',
     item         : '.item',
     label        : '> .label',
-    remove       : '> .label > .delete.icon',
+    remove       : '> .label > .fas.fa-times',
     siblingLabel : '.label',
     menu         : '.menu',
     message      : '.message',
@@ -3894,7 +3894,7 @@ $.fn.dropdown.settings.templates = {
       values      = select.values || {},
       html        = ''
     ;
-    html +=  '<i class="dropdown icon"></i>';
+    html +=  '<i class="fas fa-angle-down"></i>';
     if(select.placeholder) {
       html += '<div class="default text">' + placeholder + '</div>';
     }
@@ -3937,6 +3937,7 @@ $.fn.dropdown.settings.templates = {
   
   // generates label for multiselect
   label: function(value, text) {
+    return text + '<i class="fas fa-times"></i>';
     return text + '<i class="delete icon"></i>';
   },
 

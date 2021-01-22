@@ -5,8 +5,9 @@
     </div>
 
     <div class="bg-white shadow-lg overflow-hidden flex-1 flex flex-col 
-          block rounded-md font-semibold mt-15  text-lg">
+          rounded-md font-semibold mt-15  text-lg">
         <div class="p-10">
+            
             <div class="flex relative mt-5">
                 <div class="circle-icon-2">
                     <i class="fas fa-file-alt"></i>
@@ -50,22 +51,55 @@
         </div>
 
         <div class="flex space-x-4 p-3 footer-shadow text-grey">
-
             <div class="mx-3">
-            @livewire('projects.create', [ 
-                'data' => $data , 
-                'btn_name' => 'Update',
-                'btn_color' => 'green',
-            ])
+                @livewire('projects.create', [ 
+                    'data' => $data , 
+                    'btn_name' => 'Update',
+                    'btn_color' => 'green',
+                ])
             </div>
             
             <div class="mx-3">
-            @livewire('modal.confirmation', [ 
-                'data' => $data , 
-                'emit_name' => '"projectRemove",'. $data->id , 
-                'btn_name' => 'Remove',
-                'btn_color' => 'red',
-            ])
+                <x-btn class="text-white bg-red-600  hover:bg-red-700" wire:click="toggleConfirmationModal">
+                    {{ __('Remove') }}
+                </x-btn>
+                
+                <x-jet-dialog-modal wire:model="confirmationModal" maxWidth="2xl"> 
+
+                    <x-slot name="title"></x-slot>
+
+                    <x-slot name="content">
+                        <div class="text-center">
+                            <span class="material-icons border-4 rounded-full p-4 text-red-500 font-bold border-red-500 text-4xl block relative m-auto w-24 h-24">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                        </div>
+
+                        <div class="text-center py-6 text-2xl text-gray-700">
+                            {{__('Are you sure ?')}}
+                        </div>
+
+                        <div class="text-center font-light text-gray-700 mb-8">
+                            {{__('Do you really want to delete these record? This process cannot be undone.')}}
+                        </div>
+                    </x-slot>
+                
+                    <x-slot name="footer">
+
+                        <div class="flex">
+                            <x-btn class="text-black bg-white" wire:click="$toggle('confirmationModal')" wire:loading.attr="disabled">
+                                {{__('Nevermind')}}
+                            </x-btn>
+
+                    
+                            <x-btn class="text-white bg-red-600  hover:bg-red-700 " wire:click="remove({{$data->id}})" wire:loading.attr="disabled">
+                                {{__('Yes')}}
+                            </x-btn>
+                        </div>
+                        
+
+                    </x-slot>
+                </x-jet-dialog-modal>
             </div>
         </div>
     </div>

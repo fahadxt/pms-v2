@@ -1,10 +1,10 @@
 {
     "/js/app.js": "/js/app.js",
+    "/css/main/app.css": "/css/main/app.css",
     "/css/app.css": "/css/app.css",
     "/js/turbolinks.js": "/js/turbolinks.js",
     "/js/amcharts4/core.js": "/js/amcharts4/core.js",
     "/js/amcharts4/charts.js": "/js/amcharts4/charts.js",
     "/js/amcharts4/themes/animated.js": "/js/amcharts4/themes/animated.js",
-    "/js/sweetalert2/sweetalert2.all.min.js": "/js/sweetalert2/sweetalert2.all.min.js",
-    "/css/main/app.css": "/css/main/app.css"
+    "/js/sweetalert2/sweetalert2.all.min.js": "/js/sweetalert2/sweetalert2.all.min.js"
 }

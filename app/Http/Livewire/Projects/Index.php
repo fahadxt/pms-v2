@@ -152,7 +152,7 @@ class Index extends Component
     public function handleCreated($data)
     {
         $this->restFilters();
-        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => 'تم الإنشاء بنجاح 👍 ']);
+        $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => __('Record created successfully') . ' 👍 ' ]);
     }
 
 }
