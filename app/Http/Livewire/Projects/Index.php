@@ -83,6 +83,7 @@ class Index extends Component
         // if the user not leader or admin get only project attached to this user  
         if(auth()->user()->hasRole('user'))
         {
+            $user_id = auth()->user()->id;
             $projects->whereHas('users', function ($query) use($user_id) {
                 $query->where('user_id', $user_id);
             });

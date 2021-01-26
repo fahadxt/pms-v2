@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class project_user extends Model
 {
     protected $table = 'project_user';
-    protected $fillable = ['project_id','user_id'];
+    // protected $fillable = ['project_id','user_id'];
     public $incrementing = false;
     public $timestamps = false;
 

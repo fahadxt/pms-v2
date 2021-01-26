@@ -25,7 +25,7 @@ class DashboardController extends Controller
         ->select('assigned_to', 'users.name' , \DB::raw('count(*) as value'))
         ->groupBy('assigned_to', 'users.name')
         ->orderBy('value', 'desc')
-        ->get()->take(5)->toArray();
+        ->take(5)->toArray();
 
         return json_encode($data);
     }
