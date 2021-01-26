@@ -30,7 +30,6 @@ class ProjectPolicy
      */
     public function view(User $user, projects $projects)
     {
-        return true;
         return $user->isAbleTo('projects.show');
     }
 
