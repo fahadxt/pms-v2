@@ -12,6 +12,7 @@ class Show extends Component
 
     protected $listeners = [
         'projectUpdaeted' => 'handleUpdated',
+        'refreshProject'  => '$refresh'
     ];
 
     public  $data;
@@ -56,7 +57,8 @@ class Show extends Component
     public function handleUpdated($data)
     {
         $this->dispatchBrowserEvent('sweet-alert-success', ['msg' => __('Record has been modified successfully') . ' 👍 ' ]);
-        $this->emit('statisticsUpdate', $data);
+        // $this->emit('statisticsUpdate', $data);
+        $this->render();
     }
     
 }

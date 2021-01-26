@@ -30,6 +30,9 @@ class AdminUserSeeder extends Seeder
             'name'       => 'Super Admin',
             'email'      => 'superadmin@example.com',
             'active'     => 1,
+
+            'department_id' => 1,
+
             'password'   => bcrypt('123123123'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -39,24 +42,33 @@ class AdminUserSeeder extends Seeder
 
 
         $admin = User::create([
-            'name'       => 'Admin',
-            'email'      => 'admin@example.com',
-            'active'     => 1,
-            'password'   => bcrypt('123123123'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'name'          => 'Admin',
+            'email'         => 'admin@example.com',
+            'active'        => 1,
+
+            'department_id' => 1,
+            'unit_id'       => 1,
+
+            'password'      => bcrypt('123123123'),
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now(),
         ]);
         $admin->attachRole($admin_role);
         
 
 
         $leader = User::create([
-            'name'       => 'Leader',
-            'email'      => 'leader@example.com',
-            'active'     => 1,
-            'password'   => bcrypt('123123123'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'name'          => 'Leader',
+            'email'         => 'leader@example.com',
+            'active'        => 1,
+
+            'department_id' => 1,
+            'unit_id'       => 1,
+            'team_id'       => 1,
+
+            'password'      => bcrypt('123123123'),
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now(),
         ]);
         $leader->attachRole($leader_role);
 
@@ -66,6 +78,11 @@ class AdminUserSeeder extends Seeder
             'name'       => 'Employee',
             'email'      => 'employee@example.com',
             'active'     => 1,
+
+            'department_id' => 1,
+            'unit_id'       => 1,
+            'team_id'       => 1,
+            
             'password'   => bcrypt('123123123'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

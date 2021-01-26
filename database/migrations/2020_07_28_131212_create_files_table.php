@@ -25,7 +25,7 @@ class CreateFilesTable extends Migration
             $table->integer('fileable_id')->unsigned();
 
             // $table->integer('owner_id')->unsigned()->comment('user id of the owner of the file');
-            $table->foreignId('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('owner_id');
 
 
             $table->timestamps();

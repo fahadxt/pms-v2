@@ -23,6 +23,11 @@ class CreateUsersTable extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
             $table->boolean('active')->comment('is user active or deactivated')->default(true);
+
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->unsignedBigInteger('team_id')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -21,11 +21,12 @@ class CreateTasksTable extends Migration
             $table->boolean('completed')->default(false);
             
             // $table->integer('assigned_to')->unsigned()->nullable();
-            $table->foreignId('assigned_to')->references('id')->on('users')->onDelete('cascade')->nullable();
+            $table->foreignId('assigned_to');
 
 
             // $table->unsignedInteger('created_by');
-            $table->foreignId('created_by')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('created_by');
+            $table->foreignId('updated_by')->nullable();
 
             $table->date('due_on');
             $table->string('taskable_type')->comment('projects');

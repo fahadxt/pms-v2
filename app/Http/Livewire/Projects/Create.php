@@ -67,7 +67,7 @@ class Create extends Component
             $updaetedData = projects::find($this->data->id);
             $updaetedData->update($data);
             $updaetedData->users()->sync($this->users);
-            $this->dispatchBrowserEvent('close-modal');
+            
             $this->modal = false;
             $this->emit('statisticsUpdate', $updaetedData);
             $this->emit('projectUpdaeted' , $updaetedData);

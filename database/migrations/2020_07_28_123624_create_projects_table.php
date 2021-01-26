@@ -20,12 +20,17 @@ class CreateProjectsTable extends Migration
             $table->longText('description');
 
             // $table->integer('owner_id')->unsigned()->comment('user id of the owner of the project');
-            $table->foreignId('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('owner_id');
 
             $table->integer('status_id')->unsigned()->nullable()->default(1);
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
 
             $table->date('project_due_on');
+
+            
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->unsignedBigInteger('team_id')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
