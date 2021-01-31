@@ -7,13 +7,13 @@
             <input
                 class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                 type="text" id="name" name="name" wire:model.lazy='name'>
-                @error('name') 
+                @error('name')
                     <p class="text-red-500 text-xs text-right mt-2">
                         {{ $message }}
-                    </p> 
+                    </p>
                 @enderror
         </div>
-
+{{--
         <div class="w-full md:w-1/4 px-3">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="assigned_to">
                 {{__('Assigned To')}}
@@ -27,12 +27,12 @@
                     @endForeach
                 </select>
             </div>
-            @error('assigned_to') 
+            @error('assigned_to')
                     <p class="text-red-500 text-xs text-right mt-2">
                         {{ $message }}
-                    </p> 
+                    </p>
             @enderror
-        </div>
+        </div> --}}
 
         <div class="w-full md:w-1/4 px-3">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-right" for="due_on">
@@ -41,10 +41,10 @@
             <input
                 class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                 type="text" id="due_on" name="due_on" wire:model.lazy='due_on'>
-                @error('due_on') 
+                @error('due_on')
                     <p class="text-red-500 text-xs text-right mt-2">
                         {{ $message }}
-                    </p> 
+                    </p>
                 @enderror
 
         </div>
@@ -62,10 +62,10 @@
                     @endForeach
                 </select>
             </div>
-            @error('status') 
+            @error('status')
                     <p class="text-red-500 text-xs text-right mt-2">
                         {{ $message }}
-                    </p> 
+                    </p>
             @enderror
         </div>
         @endif
@@ -77,16 +77,16 @@
                 {{__('projects.description')}}
             </label>
 
-            <textarea 
+            <textarea
                 name="description" id="description" cols="50" rows="9"
                 class="appearance-none block w-full py-3 px-4 mb-3 leading-tight focus:outline-none bg-white border border-gray-300 focus:border-gray-400 rounded"
                 wire:model.lazy='description'>
             </textarea>
 
-            @error('description') 
+            @error('description')
                     <p class="text-red-500 text-xs text-right mt-2">
                         {{ $message }}
-                    </p> 
+                    </p>
             @enderror
 
         </div>

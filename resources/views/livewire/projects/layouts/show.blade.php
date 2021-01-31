@@ -6,8 +6,8 @@
             </h2>
 
             @livewire('tasks.form' , [
-                'project' => $data , 
-                'data' => null , 
+                'project' => $data ,
+                'data' => null ,
                 'type' => 'New task',
                 'btn_name' => 'New task',
                 'btn_color' => 'blue'

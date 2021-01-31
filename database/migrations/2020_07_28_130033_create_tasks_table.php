@@ -18,26 +18,19 @@ class CreateTasksTable extends Migration
             $table->string('name');
             $table->longText('description');
 
-            $table->boolean('completed')->default(false);
-            
-            // $table->integer('assigned_to')->unsigned()->nullable();
-            $table->foreignId('assigned_to');
-
-
-            // $table->unsignedInteger('created_by');
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by')->nullable();
-
             $table->date('due_on');
-            $table->string('taskable_type')->comment('projects');
-            $table->integer('taskable_id')->unsigned();
+            $table->morphs('taskable');
 
             $table->integer('status_id')->unsigned()->nullable();
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->boolean('completed')->default(false);
+
+            $table->foreignId('assigned_to');
+            $table->foreignId('created_by');
+            $table->foreignId('updated_by')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
-            
         });
     }
 

@@ -12,7 +12,12 @@ class departments extends Model
     public $guarded = [];
 
     public function units(){
-        return $this->hasMany(units::class, 'unit_id', 'id');
+        return $this->hasMany(units::class, 'department_id', 'id');
     }
+
+    public function users(){
+        return $this->hasMany(User::class, 'department_id', 'id');
+    }
+
 
 }

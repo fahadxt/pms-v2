@@ -13,7 +13,9 @@ const mix = require('laravel-mix');
 
 mix
     .js('resources/js/app.js', 'public/js')
+    .js('resources/js/admin-panel/main.js', 'public/assets/admin-panel/js')
     .sass('resources/sass/app.scss', 'public/css/main')
+    .sass('resources/sass/admin-panel/main.scss', 'public/assets/admin-panel/css')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),

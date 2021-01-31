@@ -14,11 +14,11 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    
-    // public filters variable 
+
+    // public filters variable
     public $filter_search , $filter_due_on, $filter_username, $filter_statuses;
-    
-    
+
+
     protected $listeners = [
         'projectCreate' => 'handleCreated',
         'updatedFilters' => 'updatedFilters',
@@ -32,7 +32,7 @@ class Index extends Component
         $name_max = 18 ;
         $description_max = 100 ;
         $user_id = auth()->user()->id;
-        
+
 
         $projects = projects::orderBy('created_at', 'desc');
         $projects = $this->applyFilters($projects);
@@ -64,23 +64,23 @@ class Index extends Component
     {
         if ($this->filter_due_on) {
             $from = date('Y-m-d', strtotime($this->filter_due_on[0]) );
-            
+
             if(count($this->filter_due_on) > 1){
                 $to = date('Y-m-d', strtotime($this->filter_due_on[1]) );
-                $projects->whereBetween('project_due_on' , [ $from , $to ] );        
+                $projects->whereBetween('project_due_on' , [ $from , $to ] );
             }
             else{
-                $projects->whereDate('project_due_on' , '=',  $from  );        
+                $projects->whereDate('project_due_on' , '=',  $from  );
             }
 
         }
 
-        
+
         if ($this->filter_search) {
             $projects->where('name', 'like' , '%' . $this->filter_search . '%');
         }
 
-        // if the user not leader or admin get only project attached to this user  
+        // if the user not leader or admin get only project attached to this user
         if(auth()->user()->hasRole('user'))
         {
             $user_id = auth()->user()->id;
@@ -121,7 +121,7 @@ class Index extends Component
     }
 
 
-    // listener to change public variable and render this component    
+    // listener to change public variable and render this component
     public function updatedFilters($updatedFilters)
     {
         if(!empty($updatedFilters)){
@@ -136,19 +136,19 @@ class Index extends Component
             if(isset($updatedFilters['filter_statuses'])){
                 $this->filter_statuses = $updatedFilters['filter_statuses'];
             }
-            
+
             if(isset($updatedFilters['filter_due_on'])){
                 $this->filter_due_on = $updatedFilters['filter_due_on'];
             }
         }else{
             $this->restFilters();
         }
-        
+
         $this->render();
     }
 
 
-    // listener to dispaly sweet alert success after success store a new project 
+    // listener to display sweet alert success after success store a new project
     // and call restFilters function to clear all filters to be sour there is no filters to show all projects
     public function handleCreated($data)
     {

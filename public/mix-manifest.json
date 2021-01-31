@@ -1,4 +1,5 @@
 {
+    "/assets/admin-panel/js/main.js": "/assets/admin-panel/js/main.js",
     "/js/app.js": "/js/app.js",
     "/css/main/app.css": "/css/main/app.css",
     "/css/app.css": "/css/app.css",
@@ -6,5 +7,6 @@
     "/js/amcharts4/core.js": "/js/amcharts4/core.js",
     "/js/amcharts4/charts.js": "/js/amcharts4/charts.js",
     "/js/amcharts4/themes/animated.js": "/js/amcharts4/themes/animated.js",
-    "/js/sweetalert2/sweetalert2.all.min.js": "/js/sweetalert2/sweetalert2.all.min.js"
+    "/js/sweetalert2/sweetalert2.all.min.js": "/js/sweetalert2/sweetalert2.all.min.js",
+    "/assets/admin-panel/css/main.css": "/assets/admin-panel/css/main.css"
 }

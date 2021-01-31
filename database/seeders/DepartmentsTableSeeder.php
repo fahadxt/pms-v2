@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\teams;
+use App\Models\units;
 use App\Models\departments;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DepartmentsTableSeeder extends Seeder
@@ -14,19 +17,19 @@ class DepartmentsTableSeeder extends Seeder
      */
     public function run()
     {
-        departments::create([
-            'name'  => 'department 1',
-            'display_name'  => 'القسم 1',
-            'description'  => 'وصف القسم 1',
-        ]);
-        departments::create([
-            'name'  => 'department 2',
-            'display_name'  => 'القسم 2',
-            'description'  => 'وصف القسم 2',
-        ]);
-        $departments = departments::factory()
-            ->times(4)
-            ->create();
+
+        for($i = 0 ; $i < 6 ; $i++){
+            departments::factory()->has(User::factory()->count(rand(2,6)) , 'users')->create()->each(function () {
+                units::factory()
+                ->times(rand(1,4))
+                ->has(User::factory()->count(rand(2,6)) , 'users')
+                ->has(teams::factory()->count(rand(2,6)) , 'teams')
+                ->create();
+
+            });
+        };
+
+
 
 
     }

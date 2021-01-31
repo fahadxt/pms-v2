@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\tasks;
 use App\Models\projects;
+use App\Models\Stage;
 use Illuminate\Database\Seeder;
 
 class FakeSeeder extends Seeder
@@ -25,18 +26,18 @@ class FakeSeeder extends Seeder
         foreach($users as $user){
             $roles = Role::take(rand(1,4))->get();
             foreach($roles as $role){
-                $user->attachRole($role); 
+                $user->attachRole($role);
             }
         }
 
         for($i = 0 ; $i < 10 ; $i++){
-            $projects = projects::factory()
-            ->has(User::factory()->times(random_int(1, 5)), 'users')
+            projects::factory()
             ->hasTasks(random_int(1, 5))
-            ->create(); 
+            ->has(Stage::factory()->times(random_int(1, 5))->has(User::factory()->times(random_int(1, 5)), 'users'), 'stages')
+            ->create();
         };
-        
-        
+
+
 
     }
 }

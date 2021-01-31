@@ -27,11 +27,7 @@ class CreateProjectsTable extends Migration
 
             $table->date('project_due_on');
 
-            
-            $table->unsignedBigInteger('department_id')->nullable();
-            $table->unsignedBigInteger('unit_id')->nullable();
-            $table->unsignedBigInteger('team_id')->nullable();
-
+            $table->integer('stages')->unsigned()->nullable()->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

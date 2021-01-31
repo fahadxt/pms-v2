@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectUserTable extends Migration
+class CreateStageUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateProjectUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_user', function (Blueprint $table) {
+        Schema::create('stage_user', function (Blueprint $table) {
             // $table->increments('id');
-            
 
-            $table->integer('project_id')->unsigned();
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+
+            // $table->integer('stage_id')->unsigned();
+            $table->foreignId('stage_id')->references('id')->on('stages')->onDelete('cascade');
 
             // $table->integer('user_id')->unsigned();
             $table->foreignId('user_id');
@@ -34,6 +34,6 @@ class CreateProjectUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_user');
+        Schema::dropIfExists('stage_user');
     }
 }

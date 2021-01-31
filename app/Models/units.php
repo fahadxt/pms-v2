@@ -12,14 +12,19 @@ class units extends Model
     use HasFactory;
     public $guarded = [];
 
-    
+
     public function department(){
         return $this->belongsTo(departments::class, 'department_id', 'id');
     }
 
-    
+
     public function teams(){
         return $this->hasMany(teams::class, 'unit_id', 'id');
     }
+
+    public function users(){
+        return $this->hasMany(User::class, 'unit_id', 'id');
+    }
+
 
 }

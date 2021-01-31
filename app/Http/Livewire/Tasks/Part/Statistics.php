@@ -13,17 +13,17 @@ class Statistics extends Component
         'statisticsUpdate' => 'handleStatistics',
         'refreshStatistics' => '$refresh'
     ];
-    
-    
 
-    public  $task, $task_completed, $task_count, $task_users;
+
+
+    public  $task, $task_completed, $task_count, $task_users = 0;
 
     public function mount($task)
     {
         $this->task = $task;
         $this->task_completed = $task->tasks->where('status_id', 4)->count();
         $this->task_count = $task->tasks->count();
-        $this->task_users = $task->users->count();
+        // $this->task_users = $task->users->count();
     }
 
     public function render()
@@ -36,6 +36,6 @@ class Statistics extends Component
         $project = projects::find($project['id']);
         $this->task_completed = $project->tasks->where('status_id', 4)->count();
         $this->task_count = $project->tasks->count();
-        $this->task_users = $project->users->count();
+        // $this->task_users = $project->users->count();
     }
 }

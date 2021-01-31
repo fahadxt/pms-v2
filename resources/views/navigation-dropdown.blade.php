@@ -26,6 +26,11 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:mr-5 sm:flex">
+                    <x-jet-nav-link href="{{ route('admin-panel.index') }}" :active="Request::routeIs('admin-panel.index')">
+                        {{ __('Admin Panel') }}
+                    </x-jet-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

@@ -38,7 +38,7 @@ class AdminUserSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]);
         $superadmin->attachRole($superadmin_role);
-        
+
 
 
         $admin = User::create([
@@ -54,7 +54,7 @@ class AdminUserSeeder extends Seeder
             'updated_at'    => Carbon::now(),
         ]);
         $admin->attachRole($admin_role);
-        
+
 
 
         $leader = User::create([
@@ -82,7 +82,7 @@ class AdminUserSeeder extends Seeder
             'department_id' => 1,
             'unit_id'       => 1,
             'team_id'       => 1,
-            
+
             'password'   => bcrypt('123123123'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

@@ -11,7 +11,7 @@ class projects extends Model
     use HasFactory;
     use SoftDeletes;
 
-    
+
     public $guarded = [];
     protected $table = 'projects';
     protected $dates = ['project_due_on'];
@@ -24,20 +24,26 @@ class projects extends Model
         return $this->belongsTo('App\Models\statuses', 'status_id', 'id');
     }
 
-    public function users(){
-        return $this->belongsToMany( 'App\Models\User', 'project_user', 'project_id', 'user_id' );
-    }
+
 
     public function tasks()
     {
         return $this->morphMany('App\Models\tasks' , 'taskable');
     }
 
-    // function to remove releted data (morphMany)
+    /**
+     * Get all of the post's comments.
+     */
+    public function stages()
+    {
+        return $this->morphMany(Stage::class, 'stageable');
+    }
+
+    // function to remove related data (morphMany)
     public static function boot() {
         parent::boot();
 
-        static::deleting(function($project) { 
+        static::deleting(function($project) {
              $project->tasks()->delete();
         });
     }

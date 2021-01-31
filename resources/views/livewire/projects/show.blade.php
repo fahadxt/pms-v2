@@ -4,10 +4,12 @@
         @livewire('tasks.part.statistics' , ['task' => $data])
     </div>
 
-    <div class="bg-white shadow-lg overflow-hidden flex-1 flex flex-col 
+    {{-- @dump($data->stages()->first()->users) --}}
+
+    <div class="bg-white shadow-lg overflow-hidden flex-1 flex flex-col
           rounded-md font-semibold mt-15  text-lg">
         <div class="p-10">
-            
+
             <div class="flex relative mt-5">
                 <div class="circle-icon-2">
                     <i class="fas fa-file-alt"></i>
@@ -34,37 +36,36 @@
             </div>
 
             <div class="flex flex-wrap mt-5 text-center justify-content-center">
-                @forelse ($data->users as $user)                
+                {{-- @forelse ($data->users as $user)
                 <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                         <div class="px-6">
                             <img src="{{ asset( $user->profile_photo_url ) }}" class="rounded-full max-w-full mx-auto" style="max-width:120px">
                             <div class="pt-6 text-center">
                                 <h5 class="text-xl font-bold">{{$user->name}}</h5>
-                                {{-- <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">Web Developer</p> --}}
                             </div>
                         </div>
                 </div>
                 @empty
                     <h1> No Users  </h1>
-                @endforelse
+                @endforelse --}}
             </div>
         </div>
 
         <div class="flex space-x-4 p-3 footer-shadow text-grey">
             <div class="mx-3">
-                @livewire('projects.create', [ 
-                    'data' => $data , 
+                @livewire('projects.create', [
+                    'data' => $data ,
                     'btn_name' => 'Update',
                     'btn_color' => 'green',
                 ])
             </div>
-            
+
             <div class="mx-3">
                 <x-btn class="text-white bg-red-600  hover:bg-red-700" wire:click="toggleConfirmationModal">
                     {{ __('Remove') }}
                 </x-btn>
-                
-                <x-jet-dialog-modal wire:model="confirmationModal" maxWidth="2xl"> 
+
+                <x-jet-dialog-modal wire:model="confirmationModal" maxWidth="2xl">
 
                     <x-slot name="title"></x-slot>
 
@@ -83,7 +84,7 @@
                             {{__('Do you really want to delete these record? This process cannot be undone.')}}
                         </div>
                     </x-slot>
-                
+
                     <x-slot name="footer">
 
                         <div class="flex">
@@ -91,12 +92,12 @@
                                 {{__('Nevermind')}}
                             </x-btn>
 
-                    
+
                             <x-btn class="text-white bg-red-600  hover:bg-red-700 " wire:click="remove({{$data->id}})" wire:loading.attr="disabled">
                                 {{__('Yes')}}
                             </x-btn>
                         </div>
-                        
+
 
                     </x-slot>
                 </x-jet-dialog-modal>

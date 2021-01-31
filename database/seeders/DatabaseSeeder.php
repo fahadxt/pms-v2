@@ -20,12 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsRoleSeeder::class);
         $this->call(AdminUserSeeder::class);
         $this->call(StatusesTableSeeder::class);
-        
-        $this->call(FakeSeeder::class);
-        
+
+
         $this->call(DepartmentsTableSeeder::class);
-        $this->call(UnitsTableSeeder::class);
-        $this->call(TeamsTableSeeder::class);
-        
+        $this->call(FakeSeeder::class);
+
     }
 }

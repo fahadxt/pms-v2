@@ -3,8 +3,9 @@
     <div class="flex flex-wrap">
     @forelse ($projects as $key => $value)
 
+    {{-- @dump($value->stages) --}}
         <a href="{{route('projects.show', ['id' => $value->id])}}" class="w-full sm:w-1/1 md:w-1/2 lg:w-1/3 xl:w-1/3 2xl:w-1/4  p-3 flex flex-col">
-            <div class="bg-white shadow-sm overflow-hidden flex-1 flex flex-col cursor-pointer 
+            <div class="bg-white shadow-sm overflow-hidden flex-1 flex flex-col cursor-pointer
             hover:shadow-lg group  rounded-md font-semibold transform hover:scale-105 motion-reduce:transform-none">
 
 
@@ -34,10 +35,10 @@
 
                 </div>
                 <div class="flex justify-between p-3 footer-shadow pt-2 text-grey">
-
+{{--
                     <span class="inline-block align-middle ">
                         <div class="flex">
-                            @foreach ($value->users as $key => $user)
+                            @foreach ($value->stages->users as $key => $user)
                             <img class="w-8 h-8 rounded-full border-2 border-white {{$key > 0 ? '-mr-3' : ''}}"
                                 src="{{ asset( $user->profile_photo_url ) }}" alt="">
                             @if (($key+1) == 2)
@@ -49,7 +50,7 @@
                                 class="flex items-center justify-center font-semibold text-gray-600 text-xs w-8 h-8 rounded-full bg-gray-200 border-2 border-white -mr-3">+{{$value->users->count() -2 }}</span>
                             @endif
                         </div>
-                    </span>
+                    </span> --}}
 
                     <span class="inline-block align-middle text-gray-400 font-light" dir="ltr">
                         <i class="far fa-calendar-alt"></i>
